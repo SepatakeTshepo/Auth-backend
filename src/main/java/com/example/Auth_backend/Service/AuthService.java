@@ -65,7 +65,7 @@ public class AuthService {
             user.getSecondName(),
             user.getEmail());
 
-            return new ApiResponse(true , "Sign in successful ! Welcome back , " +user.getFirstName() + "" + user.getSecondName());
+            return new ApiResponse(true , "Sign in successful ! Welcome back , " +user.getFirstName() + " " + user.getSecondName() + "!", userResponse);
     
 }
 }
