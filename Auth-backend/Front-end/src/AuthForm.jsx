@@ -100,57 +100,40 @@ e.preventDefault();
     <form onSubmit={handleSubmit}>
 
           {isSignUp && (
-        
-        <>
-      <lable for= "  "> FirstName : </lable>
+            <>
     <input
          type="text"
-         id="first Name"
          name="firstName"
           value={formData.firstName}
-         placeholder="e.g Tshepo"
+         placeholder="First name"
  onChange={handleChange}
       />
 
- <lable for="secondName"> SecondName : </lable>
  <input
        type="text"
-       id= "secondName"
        name="secondName"
        value={formData.secondName}
-       placeholder="e.g Smith"
+       placeholder="Second name"
   onChange={handleChange}
               />
             </>
           )}
 
- <lable for= "email"> Email address :  </lable>
   <input
  type="email"
    name="email"
-  id = " email"
             value={formData.email}
-  placeholder="Smith@gmail.com"
+  placeholder="Enter your email"
    onChange={handleChange}
    />
-  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-  <label for="password"> Password : </label>
- {!isSignUp && (
-  <a href="/forgot-password"
-   style={{color:"blue", fontSize: "15px", textDecoration: "none"}}>
-    Forgot Password?
-  </a>
-)}
-</div>
+
    <input
             type="password"
-            id="password"
      name="password"
             value={formData.password}
-    placeholder="******"
+    placeholder="Enter your password"
             onChange={handleChange}
           />
-
 
           <button className="submit-btn">
       {isSignUp ? "SIGN UP" : "SIGN IN"}
