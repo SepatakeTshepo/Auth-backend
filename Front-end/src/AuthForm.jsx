@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import "./AuthForm.css";
 
+const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
+
 function AuthForm() {
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState({ text: "", type: "" });
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -12,73 +16,46 @@ function AuthForm() {
   });
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
-
-e.preventDefault();
+    e.preventDefault();
+    setLoading(true);
+    setMessage({ text: "", type: "" });
 
     const url = isSignUp
- ? "http://localhost:8080/api/Auth/signup"
-: "http://localhost:8080/api/Auth/signin";
+      ? `${API_URL}/api/Auth/signup`
+      : `${API_URL}/api/Auth/signin`;
 
     const bodyData = isSignUp
-      ? {
-       firstName: formData.firstName,
-       secondName: formData.secondName,
-       email: formData.email,
-       password: formData.password
-        }
-  
-: {
-    
-        email: formData.email,
-         
-        password: formData.password
-        };
+      ? { firstName: formData.firstName, secondName: formData.secondName, email: formData.email, password: formData.password }
+      : { email: formData.email, password: formData.password };
 
     try {
- const response = await fetch(url, {
- method: "POST",
- headers: {
- "Content-Type": "application/json"
-        },
- body: JSON.stringify(bodyData)
+      const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bodyData)
       });
 
       const data = await response.json();
-      console.log("Server response:", data);
 
       if (response.ok) {
-        alert(isSignUp ? "Account created! You can now sign in." : "Signed in successfully!");
-
-      
-        setFormData({
-   firstName: "",
-   secondName: "",
-   email: "",
-   password: ""
-        });
-
-        
+        setMessage({ text: isSignUp ? "Account created! You can now sign in." : "Signed in successfully!", type: "success" });
+        setFormData({ firstName: "", secondName: "", email: "", password: "" });
         if (isSignUp) setIsSignUp(false);
-
       } else {
-        alert(data.message);
+        setMessage({ text: data.message || "Something went wrong.", type: "error" });
       }
-
     } catch (error) {
-      
-      console.error("Connection error:", error);
+      setMessage({ text: "Cannot connect to server. Please try again.", type: "error" });
+    } finally {
+      setLoading(false);
     }
   };
 
-  
-    return (
+  return (
     <div className="auth-container">
       <div className="auth-box">
 
