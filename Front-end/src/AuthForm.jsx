@@ -77,87 +77,64 @@ e.preventDefault();
     }
   };
 
-  return (
+  
+    return (
     <div className="auth-container">
-   <div className="auth-box">
+      <div className="auth-box">
 
-  <div className="tabs">
- <button
-      className={!isSignUp ? "active" : ""}
-            onClick={() => setIsSignUp(false)}
-      >
-            Sign In
-    </button>
+        <div className="logo">A</div>
+        <h1>{isSignUp ? "Create account" : "Welcome back"}</h1>
+        <p className="subtitle">{isSignUp ? "Sign up to get started" : "Sign in to continue"}</p>
 
- <button
-     className={isSignUp ? "active" : ""}
-       onClick={() => setIsSignUp(true)}
-          >
-            Sign Up
-   </button>
+        <div className="tabs">
+          <button className={!isSignUp ? "active" : ""} onClick={() => setIsSignUp(false)}>Sign in</button>
+          <button className={isSignUp ? "active" : ""} onClick={() => setIsSignUp(true)}>Sign up</button>
         </div>
 
-    <form onSubmit={handleSubmit}>
+        {message.text && (
+          <div className={`message ${message.type}`}>{message.text}</div>
+        )}
 
+        <form onSubmit={handleSubmit}>
           {isSignUp && (
-        
-        <>
-      <lable for= "  "> FirstName : </lable>
-    <input
-         type="text"
-         id="first Name"
-         name="firstName"
-          value={formData.firstName}
-         placeholder="e.g Tshepo"
- onChange={handleChange}
-      />
-
- <lable for="secondName"> SecondName : </lable>
- <input
-       type="text"
-       id= "secondName"
-       name="secondName"
-       value={formData.secondName}
-       placeholder="e.g Smith"
-  onChange={handleChange}
-              />
+            <>
+              <div className="field">
+                <label>First name</label>
+                <input type="text" name="firstName" value={formData.firstName} placeholder="e.g. Tshepo" onChange={handleChange} required />
+              </div>
+              <div className="field">
+                <label>Last name</label>
+                <input type="text" name="secondName" value={formData.secondName} placeholder="e.g. Smith" onChange={handleChange} required />
+              </div>
             </>
           )}
 
- <lable for= "email"> Email address :  </lable>
-  <input
- type="email"
-   name="email"
-  id = " email"
-            value={formData.email}
-  placeholder="Smith@gmail.com"
-   onChange={handleChange}
-   />
-  <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-  <label for="password"> Password : </label>
- {!isSignUp && (
-  <a href="/forgot-password"
-   style={{color:"blue", fontSize: "15px", textDecoration: "none"}}>
-    Forgot Password?
-  </a>
-)}
-</div>
-   <input
-            type="password"
-            id="password"
-     name="password"
-            value={formData.password}
-    placeholder="******"
-            onChange={handleChange}
-          />
+          <div className="field">
+            <label>Email address</label>
+            <input type="email" name="email" value={formData.email} placeholder="you@example.com" onChange={handleChange} required />
+          </div>
 
+          <div className="field">
+            <div className="password-header">
+              <label>Password</label>
+              {!isSignUp && <a href="/forgot-password" className="forgot-link">Forgot password?</a>}
+            </div>
+            <input type="password" name="password" value={formData.password} placeholder="••••••••" onChange={handleChange} required />
+          </div>
 
-          <button className="submit-btn">
-      {isSignUp ? "SIGN UP" : "SIGN IN"}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? "Please wait..." : isSignUp ? "Create account" : "Sign in"}
           </button>
-
         </form>
-   </div>
+
+        <p className="footer">
+          {isSignUp ? "Already have an account? " : "Don't have an account? "}
+          <span className="footer-link" onClick={() => setIsSignUp(!isSignUp)}>
+            {isSignUp ? "Sign in" : "Sign up for free"}
+          </span>
+        </p>
+
+      </div>
     </div>
   );
 }
