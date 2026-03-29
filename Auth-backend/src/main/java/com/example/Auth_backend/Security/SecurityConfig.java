@@ -21,32 +21,34 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain (HttpSecurity http )throws Exception  {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
 
-        .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
 
-       /*  .cors(cors ->cors.configurationSource (corsConfigurationSource()))*/
-        
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-        .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/Auth/**").permitAll()
-                .anyRequest().authenticated()
-            );
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/Auth/**").permitAll()
+                        .anyRequest().authenticated());
 
         return http.build();
     }
 
-    
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-}
-/*   @Bean
+
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(List.of(
+                "http://localhost:5173",
+                "http://localhost:3000",
+                "https://auth-backend-sage-omega.vercel.app"));
         config.setAllowedOrigins(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
@@ -56,8 +58,4 @@ public class SecurityConfig {
         return source;
     }
 
-}*/
-    
-
-    
-
+}
