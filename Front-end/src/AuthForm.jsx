@@ -6,7 +6,7 @@ const API_URL = process.env.REACT_APP_API_URL || "http://localhost:8080";
 function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState({ text: "", type: "" });
+  const [formMessage, setFormMessage] = useState({ text: "", type: "" });
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -22,7 +22,7 @@ function AuthForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage({ text: "", type: "" });
+    setFormMessage({ text: "", type: "" });
 
     const url = isSignUp
       ? `${API_URL}/api/Auth/signup`
@@ -42,14 +42,14 @@ function AuthForm() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage({ text: isSignUp ? "Account created! You can now sign in." : "Signed in successfully!", type: "success" });
+        setFormMessage({ text: isSignUp ? "Account created! You can now sign in." : "Signed in successfully!", type: "success" });
         setFormData({ firstName: "", secondName: "", email: "", password: "" });
         if (isSignUp) setIsSignUp(false);
       } else {
-        setMessage({ text: data.message || "Something went wrong.", type: "error" });
+        setFormMessage({ text: data.message || "Something went wrong.", type: "error" });
       }
     } catch (error) {
-      setMessage({ text: "Cannot connect to server. Please try again.", type: "error" });
+      setFormMessage({ text: "Cannot connect to server. Please try again.", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -68,8 +68,8 @@ function AuthForm() {
           <button className={isSignUp ? "active" : ""} onClick={() => setIsSignUp(true)}>Sign up</button>
         </div>
 
-        {message.text && (
-          <div className={`message ${message.type}`}>{message.text}</div>
+        {formMessage.text && (
+          <div className={`message ${formMessage.type}`}>{formMessage.text}</div>
         )}
 
         <form onSubmit={handleSubmit}>
