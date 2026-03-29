@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./AuthForm.css";
 
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+
 function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(true);
 
