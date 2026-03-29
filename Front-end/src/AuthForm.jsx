@@ -49,7 +49,7 @@ function AuthForm() {
         setFormMessage({ text: data.message || "Something went wrong.", type: "error" });
       }
     } catch (error) {
-      setFormMessage({ text: "Cannot connect to server. Please try again.", type: "error" });
+      setFormMessage({ text: " Sevrver might be down ", type: "error" });
     } finally {
       setLoading(false);
     }
@@ -59,10 +59,9 @@ function AuthForm() {
     <div className="auth-container">
       <div className="auth-box">
 
-        <div className="logo">A</div>
+       
         <h1>{isSignUp ? "Create account" : "Welcome back"}</h1>
-        <p className="subtitle">{isSignUp ? "Sign up to get started" : "Sign in to continue"}</p>
-
+        
         <div className="tabs">
           <button className={!isSignUp ? "active" : ""} onClick={() => setIsSignUp(false)}>Sign in</button>
           <button className={isSignUp ? "active" : ""} onClick={() => setIsSignUp(true)}>Sign up</button>
@@ -107,7 +106,7 @@ function AuthForm() {
         <p className="footer">
           {isSignUp ? "Already have an account? " : "Don't have an account? "}
           <span className="footer-link" onClick={() => setIsSignUp(!isSignUp)}>
-            {isSignUp ? "Sign in" : "Sign up for free"}
+            {isSignUp ? "Sign in" : "Sign up "}
           </span>
         </p>
 
