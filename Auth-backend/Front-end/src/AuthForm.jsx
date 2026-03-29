@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./AuthForm.css";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:8080";
+const API_URL = "https://auth-backend-production-174f.up.railway.app";
 
 function AuthForm() {
   const [isSignUp, setIsSignUp] = useState(false);
