@@ -42,14 +42,14 @@ function AuthForm() {
       const data = await response.json();
 
       if (response.ok) {
-        setFormMessage({ text: isSignUp ? "Account created! You can now sign in." : "Signed in successfully!", type: "success" });
+        setFormMessage({ text: data.Message || ( isSignUp ? "Account created! You can now sign in." : "Signed in successfully!"), type: "success" });
         setFormData({ firstName: "", secondName: "", email: "", password: "" });
         if (isSignUp) setIsSignUp(false);
       } else {
-        setFormMessage({ text: data.message || "Something went wrong.", type: "error" });
+        setFormMessage({ text: data.Message || "Something went wrong.", type: "error" });
       }
     } catch (error) {
-      setFormMessage({ text: " Server might be down ", type: "error" });
+      setFormMessage({ text: " Request failed  .Please try again ", type: "error" });
     } finally {
       setLoading(false);
     }
